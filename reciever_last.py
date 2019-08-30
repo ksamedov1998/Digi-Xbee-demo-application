@@ -58,11 +58,3 @@ class local():
                 print('problem')
 lcl=local()
 lcl.read()
-
-
-
-                        
-
-
-
-
