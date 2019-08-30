@@ -82,7 +82,7 @@ class window(QtWidgets.QMainWindow):
       self.initUI()
 
       
-   def initUI(self):                   #mainwindow yaradildi
+   def initUI(self):                  
         self.setFixedSize(700,500)
         self.dial.setNotchesVisible(True)
         self.labelrefresh.setText('Yenil\u0259m\u0259k \u00FC\u00E7\u00FCn F5 d\u00FCym\u0259sini s\u0131x\u0131n ')
@@ -91,7 +91,7 @@ class window(QtWidgets.QMainWindow):
         self.labelrefresh.setFont(font)
         self.lcd.setVisible(False)
         self.photo.setVisible(False)
-        self.photo.raise_()            #sekili diger componentlerin uzerinde gosterir
+        self.photo.raise_()            
         self.labelgif.raise_()
         self.labelgif1.raise_()
         self.labelyazi.raise_()
@@ -210,10 +210,10 @@ class window(QtWidgets.QMainWindow):
          print('salam')
          self.currentlocal.close()
       
-         #under instruction 
+         
 
          
-   def showdialog(self): #double click ile dialoq penceresi acilir ve bu pencerede lokal cihazin melumatlari daha da aydin gosterilir
+   def showdialog(self): 
       try:
          li=self.listCOM.currentItem().text().split('-')
          local=XBeeDevice(li[2],9600)
@@ -226,10 +226,10 @@ class window(QtWidgets.QMainWindow):
          local.close()
          dlg=dialog(arr_64,arr_16,arr_node,arr_pro,arr_hard)
       except:
-         pass    #except elave etmek!
+         pass    #exception
 
       
-   def showdialogremote(self): #double click ile dialoq penceresi acilir ve bu pencerede remote cihazin melumatlari daha da aydin gosterilir
+   def showdialogremote(self): 
       li=self.listw.currentItem().text().split('-')
       if self.checker !=0:
          self.lastcolored.setBackground(QtGui.QColor(255,255,255))
@@ -253,7 +253,7 @@ class window(QtWidgets.QMainWindow):
          dlg=dialog(arr_64,arr_16,arr_node,arr_pro,arr_hard)
          self.checker=1
       except:
-         pass # except elave etmek!
+         pass # exception
       
 
    def spinvalue(self):
@@ -274,7 +274,7 @@ class window(QtWidgets.QMainWindow):
 
       
 
-   def checklocal(self):                                                #secilen COM portu yoxluyur eger isleyirse local cihaz kimi istifade edir
+   def checklocal(self):                                               
       try:         
          if (self.currentlocal !=0):
             for i in range(0,self.listCOM.count()):
@@ -305,7 +305,7 @@ class window(QtWidgets.QMainWindow):
       except:
          QMessageBox.about(self, 'Yanl\u0131\u015F', 'Lokal cihaz\u0131n portu do\u011Fru deyil')
 
-   def refresh(self):                                                                  #F5 duymesini basdiqda qosulan COM portlari yenileyir
+   def refresh(self):                                                                  
       self.listCOM.clear()
       index=0
       if platform.system()=='Windows':
@@ -343,7 +343,7 @@ class window(QtWidgets.QMainWindow):
 
          
         
-   def thread(self):                                                 #bu thread temperatur button ucundu
+   def thread(self):                                               
       if  self.radiodeq.isChecked() or self.radiosan.isChecked():
          self.thread=threading.Thread(target=self.timing)
          self.thread.start()
@@ -353,7 +353,7 @@ class window(QtWidgets.QMainWindow):
          
             
             
-   def thread1(self):                                                          #thread1 sebekeni yoxlamaq ucundur
+   def thread1(self):                                                          
       if  self.radiodeq.isChecked() or self.radiosan.isChecked():
          self.thread1=threading.Thread(target=self.scan)
          self.thread1.start()
@@ -390,20 +390,20 @@ class window(QtWidgets.QMainWindow):
                defe=int((self.spin.value())/25)
                qaliqsan=(self.spin.value())%25
                for i in range(0,defe):
-                  xbee_network.set_discovery_timeout(22)  # 24 seconds + saniye elave.
+                  xbee_network.set_discovery_timeout(22)  
                   xbee_network.add_device_discovered_callback(callback_device_discovered)
                   xbee_network.start_discovery_process()
                   while xbee_network.is_discovery_running():
                      QtCore.QThread.msleep(100)
                if(qaliqsan<4):
                   add=q=4-qaliqsan
-                  xbee_network.set_discovery_timeout(qaliqsan+add)  # qaliq saniye.
+                  xbee_network.set_discovery_timeout(qaliqsan+add)  
                   xbee_network.add_device_discovered_callback(callback_device_discovered)
                   xbee_network.start_discovery_process()
                   while xbee_network.is_discovery_running():
                      QtCore.QThread.msleep(100)
                else:
-                  xbee_network.set_discovery_timeout(qaliqsan)  # qaliq saniye.
+                  xbee_network.set_discovery_timeout(qaliqsan) 
                   xbee_network.add_device_discovered_callback(callback_device_discovered)
                   xbee_network.start_discovery_process()
                   while xbee_network.is_discovery_running():
@@ -413,7 +413,7 @@ class window(QtWidgets.QMainWindow):
                self.currentlocal.close()
             else:
                
-               xbee_network.set_discovery_timeout(self.spin.value())  # qaliq saniye 
+               xbee_network.set_discovery_timeout(self.spin.value())   
                xbee_network.add_device_discovered_callback(callback_device_discovered)
                xbee_network.start_discovery_process()
                while xbee_network.is_discovery_running():
@@ -437,9 +437,7 @@ class window(QtWidgets.QMainWindow):
             self.photo.setVisible(False)
             
             
-################################################################################################################################
 
-         #deqiqe meselesi!!!!!!!!!!!!!!
          if self.radiodeq.isChecked():
          
             defe=int((self.spin.value()*60)/25)
@@ -666,21 +664,6 @@ class window(QtWidgets.QMainWindow):
          self.lcd.setVisible(False)
          self.button.setEnabled(True)
 
-
-   '''
-   def showCanvas(self):
-      a=self.listw.selectedItems()
-      objects = (1,2,3,4,5,6,8,9,10,11,12,13)
-      plt.figure("Qrafik")
-      y_pos = np.arange(len(objects))
-      performance = [10,8,6,4,2,1,22,1,55,66,22,55] 
-      plt.bar(y_pos, performance, align='center', alpha=0.5)        #qrafik penceresini acir
-      plt.xticks(y_pos, objects)
-      plt.ylabel('Temperatur')
-      plt.xlabel('Zaman')
-      plt.show()
-
-   '''
 class dialog(QtWidgets.QDialog):
    def __init__(self,edit64,edit16,editnode,editpro,edithard):
       super(dialog,self).__init__()
@@ -759,17 +742,3 @@ if __name__=='__main__':
     win=window()
     win.show()
     sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
